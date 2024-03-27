@@ -16,7 +16,7 @@ const CreateCategory = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await axios.post('/api/v1/category/create-category',{name})
+      const {data} = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/category/create-category`,{name})
       if(data?.success){
         toast.success(`${name} is created`)
         getAllCategory();
@@ -35,7 +35,7 @@ const CreateCategory = () => {
   //to get all category
   const getAllCategory = async () => {
     try {
-      const {data} = await axios.get('/api/v1/category/get-category') 
+      const {data} = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/category/get-category`) 
       if(data?.success){
         setCategories(data?.category);
       }
@@ -53,7 +53,7 @@ const CreateCategory = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
-      const {data} = await axios.put(`/api/v1/category/update-category/${selected._id}`,{name:updatedName})
+      const {data} = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/category/update-category/${selected._id}`,{name:updatedName})
       if(data.success){
         toast.success(`${updatedName} is updated`)
         setSelected(null);
@@ -73,7 +73,7 @@ const CreateCategory = () => {
 
   const handleDelete = async (id) => {
     try {
-      const {data} = await axios.delete(`/api/v1/category/delete-category/${id}`)
+      const {data} = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}/api/v1/category/delete-category/${id}`)
       if(data.success){
         toast.success(`category is Deleted`)
         getAllCategory();
@@ -88,7 +88,7 @@ const CreateCategory = () => {
   }
   return (
     <Layout title={"Dashboard - Create Category"}>
-      <div className="container-fluid m-3 p-3">
+      <div className="container-fluid m-3 p-3 dashboard">
         <div className='row'>
           <div className="col-md-3">
             <AdminMenu/>
@@ -96,7 +96,11 @@ const CreateCategory = () => {
           <div className="col-md-9">
             <h1>Manage Category</h1>
             <div className="p-3 w-50">
-              <CategoryForm handleSubmit={handleSubmit} value={name} setValue={setName}/>
+              <CategoryForm 
+                 handleSubmit={handleSubmit} 
+                 value={name} 
+                 setValue={setName}
+              />
             </div>
             <div className='w-75'>
                 <table className="table">

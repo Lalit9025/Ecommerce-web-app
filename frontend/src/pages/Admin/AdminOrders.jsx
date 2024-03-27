@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react'
+import AdminMenu from '../../components/Layout/AdminMenu'
 import Layout from '../../components/Layout/Layout'
-import UserMenu from '../../components/Layout/UserMenu'
-import axios from 'axios';
+import moment from 'moment';
 import { useAuth } from '../../context/auth';
-import moment from 'moment'
-
-const Order = () => {
+import axios from 'axios';
+import { Select } from 'antd';
+import { Option } from 'antd/es/mentions';
+const AdminOrders = () => {
+  const [status, setStatus] = useState([
+    "Not Process", 
+    "Processing", 
+    "Shipped", 
+    +"delivered", 
+    "cancelled"
+  ]);
+  const [changeStatus, setChangeStatus] = useState("");
   const [orders,setOrders] = useState([]);
   const [auth,setAuth] = useAuth();
 
   const getOrders = async () => {
     try {
-      const {data} = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/orders`);
+      const {data} = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/all-orders`);
       setOrders(data)
     } catch (error) {
       console.log(error)
@@ -21,18 +30,25 @@ const Order = () => {
     if(auth?.token) getOrders();
   },[auth?.token]);
 
+  const handleChange = async (orderId,value) => {
+    try {
+      const {data} = await axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/auth/order-status/${orderId}`, {status:value});
+      getOrders();
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   return (
-    <Layout title={"Your Orders"}>
-         <div className="container-fluid m-3 p-3 dashboard">
-            <div className="row">
-                <div className="col-md-3">
-                    <UserMenu/>
-                </div>
-                <div className="col-md-9">
-                    <h1 className='col-md-9'>All Orders</h1>
-                        
-                    {
+    <Layout title={'All orders data'}>
+        <div className="row dashboard">
+            <div className="col-md-3">
+                <AdminMenu/>
+            </div>
+            <div className="col-md-9">
+                <h1 className='text-center'>All Orders</h1>
+                {
                       orders?.map((o,i) => {
                         return (
                           <div className="border shadow">
@@ -50,7 +66,19 @@ const Order = () => {
                               <tbody>
                                 <tr>
                                   <th scope="row">{i+1}</th>
-                                  <td>{o?.status}</td>
+                                  <td>
+                                       <Select 
+                                         bordered={false} 
+                                         onChange={(value) => handleChange(o._id,value)} 
+                                         defaultValue={o?.status}
+                                       >
+                                         {status.map((s,i) => (
+                                            <Option key={i} value={s}>
+                                              {s}
+                                            </Option>
+                                         ))}
+                                       </Select>
+                                  </td>
                                   <td>{o?.buyer?.name}</td>
                                   <td>{moment(o?.createAt).fromNow()}</td>
                                   <td>{o?.payment.success ? "success": "failed"}</td>
@@ -82,12 +110,10 @@ const Order = () => {
                         )
                       })
                     }
-                </div>
             </div>
-         </div>
-    
+        </div>
     </Layout>
   )
 }
 
-export default Order
+export default AdminOrders

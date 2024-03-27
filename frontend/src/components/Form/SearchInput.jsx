@@ -11,8 +11,8 @@ const SearchInput = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
    try {
-    const {data} = await axios.get(`/api/v1/product/search/${values.keyword}`)
-    setValues({...values,results: data})
+    const {data} = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/v1/product/search/${values.keyword}`)
+    setValues({...values,results: data});
     navigate("/search");
    } catch (error) {
     console.log(error);
@@ -21,7 +21,7 @@ const SearchInput = () => {
 
   return (
     <div>
-        <form className="d-flex" role="search" onSubmit={handleSubmit}>
+        <form className="d-flex search-form" role="search" onSubmit={handleSubmit}>
             <input 
               className="form-control me-2" 
               type="search" 
