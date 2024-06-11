@@ -23,7 +23,9 @@ const CategoryProduct = () => {
            console.log(error);
            toast.error('error in getting products category wise') 
         }
-    } 
+    }
+    
+   
   return (
     <Layout>
         <div className="container mt-3 category">
@@ -41,7 +43,7 @@ const CategoryProduct = () => {
                   />
                   <div className="card-body">
                     <div className="card-name-price">
-                      <h5 className="card-title">{p.name}</h5>
+                      <h5 className="card-title">{p.name.substring(0,15)}</h5>
                       <h5 className="card-title card-price">
                         {p.price.toLocaleString("en-US", {
                           style: "currency",

@@ -92,7 +92,7 @@ const AdminOrders = () => {
                                       <div className="col-md-4">
                                           <img 
                                             src={`${process.env.REACT_APP_API_BASE_URL}/api/v1/product/product-photo/${p._id}`} 
-                                            className="card-img-top" 
+                                            className="img_div_2" 
                                             alt={p.name} 
                                             width={'100px'}
                                             height={'100px'}

@@ -47,4 +47,17 @@
   
   .similar-products .card-img-top {
     height: 300px !important;
+    width: 300px !important;
+  }
+  .img_div{
+    height: 400px;
+    width: 400px;
+  }
+  .img_div_1{
+    height: 250px;
+    width: 250px;
+  }
+  .img_div_2{
+    height: 200px;
+    width: 200px;
   }

@@ -4,6 +4,7 @@ import Layout from '../../components/Layout/Layout'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import '../../components/styles/ProductDetailsStyles.css'
 
 
 const Products = () => {
@@ -41,12 +42,12 @@ const Products = () => {
                     <div className="card m-2" style={{width: '18rem'}}>
                       <img 
                         src={`${process.env.REACT_APP_API_BASE_URL}/api/v1/product/product-photo/${p._id}`} 
-                        className="card-img-top" 
+                        className="img_div_1" 
                         alt={p.name} 
                       />
                       <div className="card-body">
-                        <h5 className="card-title">{p.name}</h5>
-                        <p className="card-text">{p.description}</p>
+                        <h5 className="card-title">{p.name.substring(0,15)}</h5>
+                        <p className="card-text">{p.description.substring(0,20)}</p>
                       </div>
                     </div>
                 </Link> 

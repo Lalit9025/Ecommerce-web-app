@@ -39,7 +39,7 @@ const ProductDetail = () => {
   return (
     <Layout>
     <div className="row container product-details">
-      <div className="col-md-6">
+      <div className="img_div">
         <img
           src={`${process.env.REACT_APP_API_BASE_URL}/api/v1/product/product-photo/${product._id}`}
           className="card-img-top"
@@ -80,7 +80,7 @@ const ProductDetail = () => {
             />
             <div className="card-body">
               <div className="card-name-price">
-                <h5 className="card-title">{p.name}</h5>
+                <h5 className="card-title">{p.name.substring(0,15)}</h5>
                 <h5 className="card-title card-price">
                   {p.price.toLocaleString("en-US", {
                     style: "currency",
